@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Madera</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
+    <link rel="shortcut icon" href="/images/icone.png">
+</head>
+
+<body>
+    <% include header.ejs %>
+    <section>
+        <article>
+            <div>
+                <form>
+                    <label for="login">Login : </label><br>
+                    <input type="text" id="login" name="login" /><br>
+                    <label for="password">Mot de passe : </label><br>
+                    <input type="password" id="password" name="password" /><br>
+                    <br><input type="submit" value="Connexion" />
+                </form>
+            </div>
+        </article>
+    </section>
+
+    <footer>
+        <a href="/">Accueil</a>
+        <a href="/configuration">Configuration</a>
+        <a href="/devis">Devis</a>
+        <a href="/paiements">Paiements</a>
+    </footer>
+</body>
+
+</html>
