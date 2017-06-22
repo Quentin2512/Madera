@@ -11,33 +11,6 @@ header{
     background-color: white;
 }
 
-header>a>img{
-    width: 35%;
-    height: auto;
-}
-
-nav{
-    margin: 10px;
-}
-
-nav>a{
-    word-wrap: break-word;
-    margin-left: 10px;
-    text-decoration: none;
-    color: rgb(110, 99, 86);
-    font-size: 18px;
-    font-weight: bold;
-}
-
-nav>a:hover{
-    word-wrap: break-word;
-    margin-left: 10px;
-    text-decoration: none;
-    color: rgb(141, 198, 53);
-    font-size: 18px;
-    font-weight: bold;
-}
-
 section{
     height: 100%;   
     margin-bottom: 30px;
@@ -55,24 +28,4 @@ section>article>div>form{
     background-color: white;
     width: 30%;
     margin: auto;
-}
-
-footer{
-    background-color: white;
-    position:fixed;
-    height:30px;
-    bottom:0px;
-    left:0px;
-    right:0px;
-    margin-bottom:0px;
-    text-align: center;
-}
-
-footer>a{
-    word-wrap: break-word;
-    margin-left: 10px;
-    text-decoration: none;
-    color: rgb(110, 99, 86);
-    font-size: 14px;
-    font-weight: bold;
 }
