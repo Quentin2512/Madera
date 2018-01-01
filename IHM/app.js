@@ -5,6 +5,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose=require('mongoose');
+var db = mongoose.connection;
+var dbUrl = 'mongodb://Madera:madera@ds161306.mlab.com:61306/madera';
+var Schema=mongoose.Schema;
 
 var index = require('./routes/index');
 
@@ -40,6 +44,15 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error.ejs');
+});
+
+mongoose.connect(dbUrl,function(err){
+  if(err){
+    return console.log('Il y a un probleme de connection a la bdd : '+err);
+  }
+  console.log('Connecte a la bdd !');
+  db.close();
+  process.exit();
 });
 
 module.exports = app;
