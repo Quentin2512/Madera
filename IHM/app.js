@@ -46,13 +46,77 @@ app.use(function(err, req, res, next) {
   res.render('error.ejs');
 });
 
+//base de données
+db.on('error',function(){
+  console.log('Erreur dans la communication avec la bdd');
+});
+
+var utilisateurSchema = new Schema({
+	nom:{
+		type:String,
+		required:true
+	},
+	prenom:{
+		type:String,
+		required:true
+	},
+	mail:{
+		type:String,
+		required:true
+	},
+	telephone:{
+		type:String,
+		required:true
+	},
+	login:{
+		type:String,
+		required:true
+	},
+	mdp:{
+		type:String,
+		required:true
+	}
+});
+
+var utilisateur = mongoose.model('utilisateur', utilisateurSchema);
+
+//connexion
 mongoose.connect(dbUrl,function(err){
   if(err){
     return console.log('Il y a un probleme de connection a la bdd : '+err);
   }
   console.log('Connecte a la bdd !');
-  db.close();
-  process.exit();
+	utilisateur.create([
+		{
+			nom:'DIGUERRE',
+			prenom:'Robin',
+			mail:'robin.diguerre@viacesi.fr',
+			telephone:'9876543210',
+			login:'robin',
+			mdp:'diguerre'
+		}], function(error){
+			if(error) return console.log(error);
+  });
+	/*utilisateur.save(function (err, user) {
+		if (err) return console.error(err);
+		console.log('Utilisateur ajouté !');
+	});*/
+	/*
+	//définition de la requete
+	//var query = utilisateur.find({ nom:'BLERIOT' });
+	var query = utilisateur.find({});
+	//choix des champs a recuperer
+	query.select('nom prenom login mdp');
+	//execution de la requete
+	query.exec(function (err, user) {
+		if (err) return handleError(err);
+		for(var i=0; i < user.length ; i++)
+			console.log('%s %s  %s %s', user[i].nom, user[i].prenom, user[i].login, user[i].mdp);
+		db.close();
+  	process.exit();
+	});*/
+
+
 });
 
 module.exports = app;
