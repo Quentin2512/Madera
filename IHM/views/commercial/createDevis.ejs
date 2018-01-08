@@ -14,32 +14,35 @@
 	<% include ../header.ejs %>
 		<div class="container">
 		<h1>Création d'un devis :</h1>
-            <form action="/commercial/createPlan">
-                <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <h2>Projet :</h2>
-                        <label>Nom du projet :</label><br/>
-                        <input type="text" id="nomProjet" class="form-control"/>
-                        <h2>Client :</h2>
-                        <select id="client" class="form-control">
-                        </select><br/>
-                        <button type="submit" class="btn btn-primary btnVal">Valider</button>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <h2>Adresse :</h2>
-                        <label>Numéro :</label><br/>
-                        <input type="text" id="numClient" class="form-control"/><br/>
-                        <label>Adresse :</label><br/>
-                        <input type="text" id="adresseClient" class="form-control"/><br/>
-                        <label>Code postal :</label><br/>
-                        <input type="text" id="postalClient" class="form-control"/><br/>
-                        <label>Ville :</label><br/>
-                        <input type="text" id="villeClient" class="form-control"/><br/>
-                        <label>Pays :</label><br/>
-                        <input type="text" id="paysClient" class="form-control"/><br/>
-                    </div>
-                </div>
-            </form>
+				<form action="/commercial/createPlan" method="POST">
+						<div class="row">
+								<div class="col-md-6 col-sm-6 col-xs-12">
+										<h2>Projet :</h2>
+										<label>Nom du projet :</label><br/>
+										<input type="text" id="nomProjet" name="nomProjet" class="form-control"/>
+										<h2>Client :</h2>
+										<select id="client" name="client" class="form-control">
+											<% for(var i=0; i < clients.length; i++){ %>
+												<option value="<%= clients[i].id %>"><%= clients[i].nom + " " + clients[i].prenom + " - " + clients[i].mail + " - " + clients[i].telephone %></option>
+											<% } %>
+										</select><br/>
+										<button type="submit" class="btn btn-primary btnVal">Valider</button>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+										<h2>Adresse :</h2>
+										<label>Numéro :</label><br/>
+										<input type="text" id="numClient" name="numClient" class="form-control"/><br/>
+										<label>Adresse :</label><br/>
+										<input type="text" id="adresseClient" name="adresseClient" class="form-control"/><br/>
+										<label>Code postal :</label><br/>
+										<input type="text" id="postalClient" name="postalClient" class="form-control"/><br/>
+										<label>Ville :</label><br/>
+										<input type="text" id="villeClient" name="villeClient" class="form-control"/><br/>
+										<label>Pays :</label><br/>
+										<input type="text" id="paysClient" name="paysClient" class="form-control"/><br/>
+								</div>
+						</div>
+				</form>
 		</div>
 		<% include ../footer.ejs %>
 </body>
