@@ -57,7 +57,7 @@ router.get('/commercial/createDevis', function (req, res, next) {
 });
 
 router.get('/commercial/createPlan', function(req, res, next){
-	var data = {
+	/*var data = {
 		nomProjet: req.body.nomProjet,
 		idClient: req.body.client,
 		numAdresse: req.body.numClient,
@@ -114,8 +114,8 @@ router.get('/commercial/createPlan', function(req, res, next){
 		idClient: data.idClient,
 		idAdresse: idAdresse
 	}
-
-	res.render('commercial/createPlan.ejs', { data: newData });
+    */
+	res.render('commercial/createPlan.ejs');
 });
 
 router.get('/commercial/confirmCreation', function(req, res, next){
