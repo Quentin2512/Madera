@@ -139,4 +139,8 @@ router.get('/commercial/confirmCreation', function (req, res, next) {
 
 });
 
+router.get('/commercial/visualiserDevis', function (req, res, next) {
+	res.render('commercial/visualiserDevis.ejs');
+});
+
 module.exports = router;
