@@ -146,12 +146,8 @@ var composantSchema = new Schema({
         type:String,
         required:true
     },
-	caracteristique_1 : {
-        type:String,
-        required:true
-    },
-	caracteristique_2 : {
-        type:String,
+	caracteristique : {
+        type:[String],
         required:true
     },
 	prix : {
