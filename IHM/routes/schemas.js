@@ -90,7 +90,7 @@ var adresseSchema = new Schema({
         required:true
     },
 	numero : {
-        type:int,
+        type:String,
         required:true
     },
 	code_postal : {
@@ -132,12 +132,12 @@ var famille_composant = mongoose.model('famille_composant',famille_composantSche
 
 var gamme_composantSchema = new Schema({
     niveau:{
-        type:int,
+        type:String,
         required:true
     }
 });
 
-var gamme_composant = mongoose.model('gamme_composant'gamme_composantSchema);
+var gamme_composant = mongoose.model('gamme_composant',gamme_composantSchema);
 
 /** ---------------------------------------------------- composant ---------------------------------------------------**/
 
@@ -147,15 +147,15 @@ var composantSchema = new Schema({
         required:true
     },
 	caracteristique_1 : {
-        type:int,
+        type:String,
         required:true
     },
 	caracteristique_2 : {
-        type:int,
+        type:String,
         required:true
     },
 	prix : {
-        type:float,
+        type:String,
         required:true
     },
 	utilisateur : {
@@ -231,7 +231,7 @@ var planSchema = new Schema({
         required:true
     },
 	nu_etage : {
-        type:int,
+        type:String,
         required:true
     },
 	image : {
@@ -239,7 +239,7 @@ var planSchema = new Schema({
         required:true
     },
 	nb_module : {
-        type:int,
+        type:String,
         required:true
     },
     type:{
@@ -252,7 +252,7 @@ var planSchema = new Schema({
             required:true
         },
         nb:{
-            type:int,
+            type:String,
             required:true
         }
     })]
@@ -268,7 +268,7 @@ var modele_gammeSchema = new Schema({
         required:true
     },
 	nb_etage : {
-        type:int,
+        type:String,
         required:true
     },
 	forme : {

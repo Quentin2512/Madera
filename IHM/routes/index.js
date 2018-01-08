@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var schemas = require('./schemas.js');
+var mongoose=require('mongoose');
+var db = mongoose.connection;
+var dbUrl = 'mongodb://Madera:madera@ds161306.mlab.com:61306/madera';
+var typeUtilisateur = mongoose.model('type_utilisateur');
+var client = mongoose.model('client');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
