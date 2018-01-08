@@ -44,3 +44,5 @@ var utilisateurSchema = new Schema({
 		required:true
 	}
 });
+
+var utilisateur = mongoose.model('utilisateur', utilisateurSchema);
