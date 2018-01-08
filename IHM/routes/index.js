@@ -61,8 +61,8 @@ router.get('/commercial/createDevis', function (req, res, next) {
 
 });
 
-router.post('/commercial/createPlan', function (req, res, next) {
-	var data = {
+router.post('/commercial/createPlan', function(req, res, next){
+	/*var data = {
 		nomProjet: req.body.nomProjet,
 		idClient: req.body.client,
 		numAdresse: req.body.numClient,
@@ -125,6 +125,7 @@ router.post('/commercial/createPlan', function (req, res, next) {
 	res.render('commercial/createPlan.ejs', {
 		data: newData
 	});*/
+	res.render('commercial/createPlan.ejs');
 });
 
 router.get('/commercial/confirmCreation', function (req, res, next) {
