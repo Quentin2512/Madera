@@ -43,42 +43,13 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error.ejs');
+  res.render('error.ejs', { error: err.status });
 });
 
 //base de données
 db.on('error',function(){
   console.log('Erreur dans la communication avec la bdd');
 });
-
-var utilisateurSchema = new Schema({
-	nom:{
-		type:String,
-		required:true
-	},
-	prenom:{
-		type:String,
-		required:true
-	},
-	mail:{
-		type:String,
-		required:true
-	},
-	telephone:{
-		type:String,
-		required:true
-	},
-	login:{
-		type:String,
-		required:true
-	},
-	mdp:{
-		type:String,
-		required:true
-	}
-});
-
-var utilisateur = mongoose.model('utilisateur', utilisateurSchema);
 
 //connexion
 mongoose.connect(dbUrl,function(err){

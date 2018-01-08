@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var schemas = require('schemas.js');
+var schemas = require('./schemas.js');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/home', function (req, res, next) {
-	var data = {
+	/*var data = {
 		login:req.body.login,
 		password:req.body.password,
 		type:req.body.type
@@ -23,7 +23,14 @@ router.post('/home', function (req, res, next) {
 			break;
 	}
 
-	res.render(page);
+	res.render(page);*/
+
+	var data = {
+		login: req.body.login,
+		password: req.body.password
+	};
+
+	res.render('home.ejs', { data: data });
 });
 
 router.get('/commercial/createDevis', function (req, res, next) {
@@ -85,7 +92,7 @@ router.get('/commercial/createPlan', function(req, res, next){
 						}).sort('_id').exec(function(error, results2){
 							if(error) return next(error);
 							else{
-								for(var i = 0; i < results2.length){
+								for(var i = 0; i < results2.length; i++){
 									idAdresse = results2[i]._id;
 								}
 							}
