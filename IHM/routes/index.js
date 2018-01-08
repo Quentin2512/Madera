@@ -55,14 +55,12 @@ router.get('/commercial/createDevis', function (req, res, next) {
 				//console.log(types[i].id + " - " + types[i].nom + " - " + types[i].prenom + " - " + types[i].mail + " - " + types[i].telephone);
 			}
 		}
+		res.render('commercial/createDevis.ejs', { clients: types });
 	});
-
-	res.render('commercial/createDevis.ejs', { clients: types });
-
 });
 
 router.post('/commercial/createPlan', function(req, res, next){
-	/*var data = {
+	var data = {
 		nomProjet: req.body.nomProjet,
 		idClient: req.body.client,
 		numAdresse: req.body.numClient,
@@ -75,8 +73,14 @@ router.post('/commercial/createPlan', function(req, res, next){
 	console.log(data.numAdresse + ", " + data.libAdresse);
 	console.log(data.posAdresse + " " + data.vilAdresse + ", " + data.payAdresse);
 
-	/*var idAdresse = '';
-	adresse.find().sort('_id').exec(function (error, results) {
+	var idAdresse = '';
+	adresse.find({
+		libelle: data.libAdresse,
+		numero: data.numAdresse,
+		code_postal: data.posAdresse,
+		ville: data.vilAdresse,
+		pays: data.payAdresse
+	}).sort('_id').exec(function (error, results) {
 		if (error) return next(error);
 		else {
 			if (results.length > 0) {
@@ -112,19 +116,22 @@ router.post('/commercial/createPlan', function(req, res, next){
 					}
 				});
 			}
+			var newData = {
+				nomProjet: data.nomProjet,
+				dateProjet: Date.now(),
+				idClient: data.idClient,
+				idAdresse: idAdresse
+			}
+
+			console.log(newData.nomProjet + " - " + newData.dateProjet + " - " + newData.idClient + " - " + idAdresse);
 		}
 	});
 
-	var newData = {
-		nomProjet: data.nomProjet,
-		dateProjet: Date.now(),
-		idClient: data.idClient,
-		idAdresse: idAdresse
-	}
 
-	res.render('commercial/createPlan.ejs', {
+	/*res.render('commercial/createPlan.ejs', {
 		data: newData
 	});*/
+
 	res.render('commercial/createPlan.ejs');
 });
 
