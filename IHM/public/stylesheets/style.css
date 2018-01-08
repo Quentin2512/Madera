@@ -1,4 +1,11 @@
-wbody {
+section{
+    height: 100%;
+    margin-bottom: 30px;
+    background-color: white;
+    text-align: center;
+}
+
+body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
