@@ -86,7 +86,7 @@ mongoose.connect(dbUrl,function(err){
     return console.log('Il y a un probleme de connection a la bdd : '+err);
   }
   console.log('Connecte a la bdd !');
-	utilisateur.create([
+	/*utilisateur.create([
 		{
 			nom:'DIGUERRE',
 			prenom:'Robin',
@@ -96,7 +96,7 @@ mongoose.connect(dbUrl,function(err){
 			mdp:'diguerre'
 		}], function(error){
 			if(error) return console.log(error);
-  });
+  });*/
 	/*utilisateur.save(function (err, user) {
 		if (err) return console.error(err);
 		console.log('Utilisateur ajouté !');

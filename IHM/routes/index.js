@@ -15,4 +15,8 @@ router.post('/home', function (req, res, next) {
 	res.render('home.ejs',{ data: data });
 });
 
+router.get('/commercial/createDevis', function (req, res, next) {
+	res.render('commercial/createDevis.ejs');
+});
+
 module.exports = router;

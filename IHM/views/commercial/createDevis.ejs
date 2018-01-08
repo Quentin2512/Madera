@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<title>Madera</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/header_footer.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
+	<link rel="shortcut icon" href="/images/icone.png">
+</head>
+
+<body>
+	<% include ../header.ejs %>
+		<div class="container">
+		<h1>Création d'un devis :</h1>
+			<div class="row">
+				<div class="col-md-6 col-sm-6 col-xs-12">
+					<h2>Projet :</h2>
+					<label>Nom du projet :</label><br/>
+					<input type="text" id="nomProjet" class="form-control"/>
+					<h2>Client :</h2>
+					<select id="client" class="form-control">
+					</select><br/>
+					<button type="submit" class="btn btn-primary btnVal">Valider</button>
+					<!--<asp:Button runat="server" Text="Valider" CssClass="btn btn-primary btnVal" OnClick="continuer" /><br />
+					<span id="valSum"><asp:ValidationSummary DisplayMode="BulletList" runat="server" HeaderText="Différentes erreurs trouvées : "/></span>-->
+				</div>
+				<div class="col-md-6 col-sm-6 col-xs-12">
+					<h2>Adresse :</h2>
+					<label>Numéro :</label><br/>
+					<input type="text" id="numClient" class="form-control"/><br/>
+					<label>Adresse :</label><br/>
+					<input type="text" id="adresseClient" class="form-control"/><br/>
+					<label>Code postal :</label><br/>
+					<input type="text" id="postalClient" class="form-control"/><br/>
+					<label>Ville :</label><br/>
+					<input type="text" id="villeClient" class="form-control"/><br/>
+					<label>Pays :</label><br/>
+					<input type="text" id="paysClient" class="form-control"/><br/>
+				</div>
+				<asp:RequiredFieldValidator id="reqNomProjet" ControlToValidate="nomProjet" Display="None" ErrorMessage="Veuillez renseigner un nom de projet !" runat="server" />
+				<asp:RequiredFieldValidator id="reqNumClient" ControlToValidate="numClient" Display="None" ErrorMessage="Veuillez renseigner un numéro d'adresse !" runat="server" />
+				<asp:RequiredFieldValidator id="reqAdresseClient" ControlToValidate="adresseClient" Display="None" ErrorMessage="Veuillez renseigner une adresse !" runat="server" />
+				<asp:RequiredFieldValidator id="reqPostalClient" ControlToValidate="postalClient" Display="None" ErrorMessage="Veuillez renseigner un code postal !" runat="server" />
+				<asp:RequiredFieldValidator id="reqVilleClient" ControlToValidate="villeClient" Display="None" ErrorMessage="Veuillez renseigner une ville !" runat="server" />
+				<asp:RequiredFieldValidator id="reqPaysClient" ControlToValidate="paysClient" Display="None" ErrorMessage="Veuillez renseigner un pays !" runat="server" />
+			</div>
+		</div>
+		<% include ../footer.ejs %>
+</body>
+
+</html>
