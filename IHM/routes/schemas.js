@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+/** ---------------------------------------------------- Type utilisateur ----------------------------------------------**/
+
 var typeUtilisateurSchema = new Schema({
 	libelle:{
 		type:String,
@@ -13,6 +15,8 @@ var typeUtilisateurSchema = new Schema({
 });
 
 var typeUtilisateur = mongoose.model('type_utilisateur', typeUtilisateurSchema);
+
+/** ------------------------------------------------------ utilisateur -------------------------------------------------**/
 
 var utilisateurSchema = new Schema({
 	nom:{
@@ -39,6 +43,10 @@ var utilisateurSchema = new Schema({
 		type:String,
 		required:true
 	},
+	adresse :{
+        type:Schema.Types.ObjectId,
+        required:true
+    },
 	type:{
 		type:Schema.Types.ObjectId,
 		required:true
@@ -46,3 +54,266 @@ var utilisateurSchema = new Schema({
 });
 
 var utilisateur = mongoose.model('utilisateur', utilisateurSchema);
+
+/** --------------------------------------------------------- Client ---------------------------------------------------**/
+
+var clientSchema = new Schema({
+	nom :{
+        type:String,
+        required:true
+    },
+	prenom : {
+        type:String,
+        required:true
+    },
+	mail :{
+        type:String,
+        required:true
+    },
+	telephone : {
+        type:String,
+        required:true
+    },
+	adresse :{
+        type:Schema.Types.ObjectId,
+        required:true
+    }
+});
+
+var client = mongoose.model('client',clientSchema);
+
+/** -------------------------------------------------------- Adresse --------------------------------------------------**/
+
+var adresseSchema = new Schema({
+    libelle : {
+        type:String,
+        required:true
+    },
+	numero : {
+        type:int,
+        required:true
+    },
+	code_postal : {
+        type:String,
+        required:true
+    },
+	ville : {
+        type:String,
+        required:true
+    },
+	pays : {
+        type:String,
+        required:true
+    }
+});
+
+var adresse = mongoose.model('adresse',adresseSchema);
+
+/** ---------------------------------------------------- famille_composant ----------------------------------------------**/
+
+var famille_composantSchema = new Schema({
+	nom : {
+        type:String,
+        required:true
+    },
+	type : {
+        type:String,
+        required:true
+    },
+	unite_mesure : {
+        type:String,
+        required:true
+    }
+});
+
+var famille_composant = mongoose.model('famille_composant',famille_composantSchema);
+
+/** ---------------------------------------------------- gamme_composant ----------------------------------------------**/
+
+var gamme_composantSchema = new Schema({
+    niveau:{
+        type:int,
+        required:true
+    }
+});
+
+var gamme_composant = mongoose.model('gamme_composant'gamme_composantSchema);
+
+/** ---------------------------------------------------- composant ---------------------------------------------------**/
+
+var composantSchema = new Schema({
+    libelle : {
+        type:String,
+        required:true
+    },
+	caracteristique_1 : {
+        type:int,
+        required:true
+    },
+	caracteristique_2 : {
+        type:int,
+        required:true
+    },
+	prix : {
+        type:float,
+        required:true
+    },
+	utilisateur : {
+        type:Schema.Types.ObjectId,
+        required:true
+    },
+	gamme_composant : {
+        type:Schema.Types.ObjectId,
+        required:true
+    },
+	famille_composant : {
+        type:Schema.Types.ObjectId,
+        required:true
+    }
+});
+
+var composant = mongoose.model('composant',composantSchema);
+
+/** ------------------------------------------------ caracteristique_gamme -----------------------------------------------**/
+
+var caracteristique_gammeSchema = new Schema({
+    nom : {
+        type:String,
+        required:true
+    },
+	type : {
+        type:String,
+        required:true
+    }
+});
+
+var caracteristique_gamme = mongoose.model('caracteristique_gamme',caracteristique_gammeSchema);
+
+/** ---------------------------------------------------- gamme ----------------------------------------------------------**/
+
+var gammeSchema = new Schema({
+    nom : {
+        type:String,
+        required:true
+    },
+	caracteristique_gamme :{
+        type:[Schema.Types.ObjectId],
+        required:true
+    }
+});
+
+var gamme = mongoose.model('gamme',gammeSchema);
+
+/** ---------------------------------------------------- module ----------------------------------------------------------**/
+
+var moduleSchema = new Schema({
+    nom : {
+        type:String,
+        required:true
+    },
+	gamme : {
+        type:Schema.Types.ObjectId,
+        required:true
+    },
+	composant : {
+        type:[Schema.Types.ObjectId],
+        required:true
+    }
+});
+
+var module = mongoose.model('module',moduleSchema);
+
+/** --------------------------------------------------- plan ------------------------------------------------------------**/
+
+var planSchema = new Schema({
+    nom : {
+        type:String,
+        required:true
+    },
+	nu_etage : {
+        type:int,
+        required:true
+    },
+	image : {
+        type:String,
+        required:true
+    },
+	nb_module : {
+        type:int,
+        required:true
+    },
+    type:{
+        type:String,
+        required:true
+    },
+	module : [new Schema({
+        id_module:{
+            type:Schema.Types.ObjectId,
+            required:true
+        },
+        nb:{
+            type:int,
+            required:true
+        }
+    })]
+});
+
+var plan = mongoose.model('plan',planSchema);
+
+/** ------------------------------------------------ modele_gamme --------------------------------------------------------**/
+
+var modele_gammeSchema = new Schema({
+    nom : {
+        type:String,
+        required:true
+    },
+	nb_etage : {
+        type:int,
+        required:true
+    },
+	forme : {
+        type:String,
+        required:true
+    },
+	gamme : {
+        type:Schema.Types.ObjectId,
+        required:true
+    },
+	plan : {
+        type:[Schema.Types.ObjectId],
+        required:true
+    }
+});
+
+var modele_gamme = mongoose.model('modele_gamme',modele_gammeSchema);
+
+/** --------------------------------------------------- devis -----------------------------------------------------------**/
+
+var devisSchema = new Schema({
+    nom : {
+        type:String,
+        required:true
+    },
+	date_devis : {
+        type:Date,
+        required:true
+    },
+	client : {
+        type:Schema.Types.ObjectId,
+        required:true
+    },
+	adresse : {
+        type:Schema.Types.ObjectId,
+        required:true
+    },
+	utilisateur: {
+        type:Schema.Types.ObjectId,
+        required:true
+    },
+	plan : {
+        type:[Schema.Types.ObjectId],
+        required:true
+    }
+});
+
+var devis = mongoose.model('devis',devisSchema);
