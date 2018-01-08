@@ -6,6 +6,7 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/header_footer.css">
+	<% include boostrap_link.ejs %>
 	<link rel="shortcut icon" href="/images/icone.png">
 </head>
 
@@ -17,10 +18,10 @@
 				<div>
 					<form action="/home" method="post">
 						<label for="login">Login : </label><br>
-						<input type="text" id="login" name="login" /><br>
+						<input type="text" class="form-control" id="login" name="login" /><br>
 						<label for="password">Mot de passe : </label><br>
-						<input type="password" id="password" name="password" /><br>
-						<br><input type="submit" value="Connexion" />
+						<input type="password" id="password" name="password" class="form-control"/><br>
+						<br><input type="submit" value="Connexion" class="btn btn-success" />
 					</form>
 				</div>
 			</article>

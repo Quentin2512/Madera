@@ -14,18 +14,6 @@ header{
 section{
     height: 100%;   
     margin-bottom: 30px;
-    background-color: whitesmoke;
-    text-align: center;
-}
-
-section>article>div{
-    width: 100%;
-    position: absolute;
-    top: 45%;
-}
-
-section>article>div>form{
     background-color: white;
-    width: 30%;
-    margin: auto;
+    text-align: center;
 }
