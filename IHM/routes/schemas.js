@@ -115,6 +115,7 @@ var famille_composantSchema = new Schema({
 	nom : {
         type:String,
         required:true
+	}
 });
 
 var famille_composant = mongoose.model('famille_composant',famille_composantSchema);

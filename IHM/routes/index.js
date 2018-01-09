@@ -5,8 +5,18 @@ var mongoose = require('mongoose');
 var db = mongoose.connection;
 var dbUrl = 'mongodb://Madera:madera@ds161306.mlab.com:61306/madera';
 var typeUtilisateur = mongoose.model('type_utilisateur');
+var utilisateur = mongoose.model('utilisateur');
 var client = mongoose.model('client');
 var adresse = mongoose.model('adresse');
+var famille_composant = mongoose.model('famille_composant');
+var gamme_composant = mongoose.model('gamme_composant');
+var composant = mongoose.model('composant');
+var caracteristique_gamme = mongoose.model('caracteristique_gamme');
+var gamme = mongoose.model('gamme');
+var modulo = mongoose.model('module');
+var plan = mongoose.model('plan');
+var modele_gamme = mongoose.model('modele_gamme');
+var devis = mongoose.model('devis');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -116,23 +126,46 @@ router.post('/commercial/createPlan', function(req, res, next){
 					}
 				});
 			}
+		  	var dateNow = new Date();
 			var newData = {
 				nomProjet: data.nomProjet,
-				dateProjet: Date.now(),
+				dateProjet: ("0" + dateNow.getDate()).substr(-2,2) + "/" + ("0" + (dateNow.getMonth()+1)).substr(-2,2) + "/" + dateNow.getFullYear(),
 				idClient: data.idClient,
 				idAdresse: idAdresse
 			}
 
-			console.log(newData.nomProjet + " - " + newData.dateProjet + " - " + newData.idClient + " - " + idAdresse);
+
+
+		  	res.render('commercial/createPlan.ejs', {
+				data: newData
+			});
 		}
 	});
 
 
 	/*res.render('commercial/createPlan.ejs', {
 		data: newData
-	});*/
+	});
 
-	res.render('commercial/createPlan.ejs');
+	res.render('commercial/createPlan.ejs');*/
+});
+
+router.post('/commercial/createPlanSearch', function(req, res, next){
+	var typeSearch = req.body.typeSearch;
+	var types = {};
+	switch(typeSearch){
+		case "gamme":
+			gamme.find().sort('nom').exec(function(error, results){
+				if(error) return next(error);
+				else{
+					for (var i = 0; i < results.length; i++) {
+						types[i] = { id:results[i]._id, nom: results[i].nom };
+					}
+					res.send(JSON.stringify(types));
+				}
+			})
+			break;
+	}
 });
 
 router.get('/commercial/confirmCreation', function (req, res, next) {

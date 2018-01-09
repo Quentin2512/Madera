@@ -4,59 +4,73 @@
 <head>
 	<title>Madera</title>
 	<meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/table.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/table.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/header_footer.css">
 	<% include ../bootstrap_link.ejs %>
-	<link rel="shortcut icon" href="/images/icone.png">
+		<link rel="shortcut icon" href="/images/icone.png">
 </head>
 
 <body>
 	<% include ../header.ejs %>
-    <section>
-        <article class="row">
-            <form>
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <label>Gamme de la maison :</label><br>
-                    <select class="form-control"></select><br>
-                    <label>Choix du modèle :</label><br>
-                    <select class="form-control"></select><br>
-                    <label>Choix de l'étage :</label><br>
-                    <select class="form-control"></select><br>
-                    <label>Ajouts des options :</label><br>
-                    <select class="form-control"></select><br>
-                    <input type="submit" value="Ajouter" class="btn btn-success"><br>
-                    <br>
-                    <div id="table-wrapper">
-                      <div id="table-scroll">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th><span class="text">Option</span></th>
-                                    <th><span class="text">Supprimer</span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                          </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8 col-sm-8 col-xs-12">
-                    <h3>Plan :</h3>
-                    <img src="/images/plan.png" alt="plan" style="width: 600px; height: auto;"/><br/>
-                </div>
-                <div class="row" style="text-align: center;">
-                    <input type="submit" class="btn btn-success" value="Valider" style="width: 200px;" />
-                </div>
-            </form>
-        </article>
+		<section>
+			<article class="row">
+				<form>
+					<div class="col-md-4 col-sm-4 col-xs-12">
+						<label>Gamme de la maison :</label><br>
+						<select id="gamme" class="form-control"></select><br>
+						<label>Choix du modèle :</label><br>
+						<select id="modele_gamme" class="form-control"></select><br>
+						<label>Choix de l'étage :</label><br>
+						<select id="etage" class="form-control"></select><br>
+						<label>Ajouts des options :</label><br>
+						<select id="optionsAvailable" class="form-control"></select><br>
+						<input type="submit" value="Ajouter" class="btn btn-success"><br>
+						<br>
+						<div id="table-wrapper">
+							<div id="table-scroll">
+								<table>
+									<thead>
+										<tr>
+											<th><span class="text">Option</span></th>
+											<th><span class="text">Supprimer</span></th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-8 col-sm-8 col-xs-12">
+						<h3>Plan :</h3>
+						<img src="/images/plan.png" alt="plan" style="width: 600px; height: auto;" /><br/>
+					</div>
+					<div class="row" style="text-align: center;">
+						<input type="submit" class="btn btn-success" value="Valider" style="width: 200px;" />
+					</div>
+				</form>
+			</article>
+			<article class="row">
 
-        <article  class="row">
-
-        </article>
-    </section>
-    <% include ../footer.ejs %>
+			</article>
+		</section>
+		<% include ../footer.ejs %>
+		<script>
+			window.onload = function() {
+				$.post("/commercial/createPlanSearch", {
+					typeSearch: "gamme"
+				}, function(data) {
+					var newData = JSON.parse(data);
+					for (var i = 0; i < Object.keys(newData).length; i++) {
+					 	var option = document.createElement("option");
+					  	option.value = newData[i].id;
+					  	option.text = newData[i].nom;
+					  	document.getElementById('gamme').add(option);
+					}
+				});
+			}
+		</script>
 </body>
 
 </html>
