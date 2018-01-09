@@ -115,15 +115,6 @@ var famille_composantSchema = new Schema({
 	nom : {
         type:String,
         required:true
-    },
-	type : {
-        type:String,
-        required:true
-    },
-	unite_mesure : {
-        type:String,
-        required:true
-    }
 });
 
 var famille_composant = mongoose.model('famille_composant',famille_composantSchema);
@@ -131,6 +122,10 @@ var famille_composant = mongoose.model('famille_composant',famille_composantSche
 /** ---------------------------------------------------- gamme_composant ----------------------------------------------**/
 
 var gamme_composantSchema = new Schema({
+     nom:{
+        type:String,
+        required:true
+    },
     niveau:{
         type:String,
         required:true
@@ -211,10 +206,16 @@ var moduleSchema = new Schema({
         type:Schema.Types.ObjectId,
         required:true
     },
-	composant : {
-        type:[Schema.Types.ObjectId],
-        required:true
-    }
+	composant : [new Schema({
+        id_composant:{
+            type:Schema.Types.ObjectId,
+            required:true
+        },
+        nb:{
+            type:String,
+            required:true
+        }
+    })]
 });
 
 var module = mongoose.model('module',moduleSchema);
@@ -291,7 +292,7 @@ var devisSchema = new Schema({
         required:true
     },
 	date_devis : {
-        type:Date,
+        type:String,
         required:true
     },
 	client : {
