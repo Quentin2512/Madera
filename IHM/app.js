@@ -86,8 +86,6 @@ mongoose.connect(dbUrl,function(err){
 		db.close();
   	process.exit();
 	});*/
-
-
 });
 
 module.exports = app;

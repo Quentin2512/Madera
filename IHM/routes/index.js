@@ -23,6 +23,69 @@ router.get('/', function (req, res, next) {
 	res.render('index.ejs');
 });
 
+router.get('/insertionDonnees', function(req, res, next){
+	/* script insertion données à la base */
+	/*gamme.create([
+	{
+		nom:'Classique'
+	},
+	{
+		nom:'Moderne'
+	}], function(error){
+		if(error) return console.log(error);
+  	});
+	gamme.save(function (err, user) {
+		if (err) return console.error(err);
+		console.log('Gammes ajoutées !');
+	});*/
+
+	/*gamme.find({nom:'Classique'}).sort('_id').exec(function(error, results){
+		if(error) return next(error);
+		else{
+			var idGamme=results[0]._id;
+			db.collection("modele_gamme").insertMany([
+				{
+					nom:'CLA_1_CAR',
+					nb_etage:'1',
+					forme:'Carré',
+					gamme:idGamme
+				},
+				{
+					nom:'CLA_2_RON',
+					nb_etage:'2',
+					forme:'Rond',
+					gamme:idGamme
+				}], function(err, res) {
+					if (err) throw err;
+					console.log("Number of documents inserted: " + res.insertedCount);
+  			});
+		}
+	});*//*
+
+	gamme.find({nom:'Moderne'}).sort('_id').exec(function(error, results){
+		if(error) return next(error);
+		else{
+			var idGamme=results[0]._id;
+			db.collection("modele_gamme").insertMany([
+				{
+					nom:'MOD_1_CAR',
+					nb_etage:'1',
+					forme:'Carré',
+					gamme:idGamme
+				},
+				{
+					nom:'MOD_2_RON',
+					nb_etage:'2',
+					forme:'Rond',
+					gamme:idGamme
+				}], function(err, res) {
+					if (err) throw err;
+					console.log("Number of documents inserted: " + res.insertedCount);
+  			});
+		}
+	});*/
+});
+
 router.post('/home', function (req, res, next) {
 	/*var data = {
 		login:req.body.login,
@@ -65,11 +128,13 @@ router.get('/commercial/createDevis', function (req, res, next) {
 				//console.log(types[i].id + " - " + types[i].nom + " - " + types[i].prenom + " - " + types[i].mail + " - " + types[i].telephone);
 			}
 		}
-		res.render('commercial/createDevis.ejs', { clients: types });
+		res.render('commercial/createDevis.ejs', {
+			clients: types
+		});
 	});
 });
 
-router.post('/commercial/createPlan', function(req, res, next){
+router.post('/commercial/createPlan', function (req, res, next) {
 	var data = {
 		nomProjet: req.body.nomProjet,
 		idClient: req.body.client,
@@ -126,17 +191,17 @@ router.post('/commercial/createPlan', function(req, res, next){
 					}
 				});
 			}
-		  	var dateNow = new Date();
+			var dateNow = new Date();
 			var newData = {
 				nomProjet: data.nomProjet,
-				dateProjet: ("0" + dateNow.getDate()).substr(-2,2) + "/" + ("0" + (dateNow.getMonth()+1)).substr(-2,2) + "/" + dateNow.getFullYear(),
+				dateProjet: ("0" + dateNow.getDate()).substr(-2, 2) + "/" + ("0" + (dateNow.getMonth() + 1)).substr(-2, 2) + "/" + dateNow.getFullYear(),
 				idClient: data.idClient,
 				idAdresse: idAdresse
 			}
 
 
 
-		  	res.render('commercial/createPlan.ejs', {
+			res.render('commercial/createPlan.ejs', {
 				data: newData
 			});
 		}
@@ -150,20 +215,42 @@ router.post('/commercial/createPlan', function(req, res, next){
 	res.render('commercial/createPlan.ejs');*/
 });
 
-router.post('/commercial/createPlanSearch', function(req, res, next){
+router.post('/commercial/createPlanSearch', function (req, res, next) {
 	var typeSearch = req.body.typeSearch;
+	var data = req.body.data;
 	var types = {};
-	switch(typeSearch){
+	switch (typeSearch) {
 		case "gamme":
-			gamme.find().sort('nom').exec(function(error, results){
-				if(error) return next(error);
-				else{
+			gamme.find().sort('nom').exec(function (error, results) {
+				if (error) return next(error);
+				else {
 					for (var i = 0; i < results.length; i++) {
-						types[i] = { id:results[i]._id, nom: results[i].nom };
+						types[i] = {
+							id: results[i]._id,
+							nom: results[i].nom
+						};
 					}
 					res.send(JSON.stringify(types));
 				}
-			})
+			});
+			break;
+		case "modele_gamme":
+			modele_gamme.find({gamme:data}).sort('nom').exec(function(error, results){
+				if(error) return next(error);
+				else {
+					for(var i = 0; i < results.length; i++){
+						types[i] = {
+							id: results[i]._id,
+							nom: results[i].nom,
+							nb_etage: results[i].nb_etage,
+							forme: results[i].forme,
+							gamme: results[i].gamme,
+							plan: results[i].plan
+						};
+					}
+					res.send(JSON.stringify(types));
+				}
+			});
 			break;
 	}
 });

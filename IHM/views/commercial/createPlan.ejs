@@ -18,9 +18,9 @@
 				<form>
 					<div class="col-md-4 col-sm-4 col-xs-12">
 						<label>Gamme de la maison :</label><br>
-						<select id="gamme" class="form-control"></select><br>
+						<select id="gamme" class="form-control" onchange="searchModele()"></select><br>
 						<label>Choix du modèle :</label><br>
-						<select id="modele_gamme" class="form-control"></select><br>
+						<select id="modele_gamme" class="form-control" onchange="searchEtage()"></select><br>
 						<label>Choix de l'étage :</label><br>
 						<select id="etage" class="form-control"></select><br>
 						<label>Ajouts des options :</label><br>
@@ -68,7 +68,41 @@
 					  	option.text = newData[i].nom;
 					  	document.getElementById('gamme').add(option);
 					}
+					searchModele();
 				});
+			}
+
+			function searchModele(){
+				document.getElementById('modele_gamme').innerHTML = '';
+				$.post("/commercial/createPlanSearch", {
+					typeSearch: "modele_gamme",
+					data: document.getElementById('gamme').value
+				}, function(data) {
+					var newData = JSON.parse(data);
+					for (var i = 0; i < Object.keys(newData).length; i++) {
+					 	var option = document.createElement("option");
+					  	option.value = newData[i].id+"-"+newData[i].nb_etage;
+					  	option.text = "Nom : "+newData[i].nom+" / Nb étages : "+newData[i].nb_etage+" / Forme : "+newData[i].forme;
+					  	document.getElementById('modele_gamme').add(option);
+					}
+					searchEtage();
+				});
+			}
+
+			function searchEtage(){
+				document.getElementById("etage").innerHTML = '';
+				var nb_etages = document.getElementById("modele_gamme").value.split('-')[1];
+				for(var i = 0; i < nb_etages; i++){
+					var option = document.createElement("option");
+					option.value = i;
+					if(i == 0){
+						option.text = "RDC";
+					}
+					else{
+						option.text = i;
+					}
+					document.getElementById("etage").add(option);
+				}
 			}
 		</script>
 </body>
