@@ -649,45 +649,71 @@ router.get('/insertionDonnees', function(req, res, next){
                     var planRond0 = results[2]._id;
                     var planRond1 = results[3]._id;
 
-                    //insertion devis
-                    db.collection("devis").insertMany([
+                    //insertion modele_gamme
+                    db.collection("modele_gamme").insertMany([
                         {
-                            nom:'Carre - 3p - 0',
-                            nu_etage:'0',
-                            image:'carre_3p',
-                            module:[]
-                        },
-                        {
-                            nom:'Carre - 3p - 1',
-                            nu_etage:'1',
-                            image:'carre_3p',
-                            module:[
-                                {
-                                    id_module: modPlancher,
-                                    nb: '3'
-                                }
+                            nom:'Carre - 1',
+                            nb_etage:'2',
+                            forme:'carre',
+                            gamme:gamBio1,
+                            plan:[
+                                planCarre0,
+                                planCarre1
                             ]
                         },
                         {
-                            nom:'Rond - 4p - 0',
-                            nu_etage:'0',
-                            image:'rond_4p',
-                            module:[]
+                            nom:'Carre - 2',
+                            nb_etage:'2',
+                            forme:'carre',
+                            gamme:gamBio2,
+                            plan:[
+                                planCarre0,
+                                planCarre1
+                            ]
                         },
                         {
-                            nom:'Rond - 4p - 1',
-                            nu_etage:'1',
-                            image:'rond_4p',
-                            module:[
-                                {
-                                    id_module: modPlancher,
-                                    nb: '4'
-                                }
+                            nom:'Carre - 3',
+                            nb_etage:'2',
+                            forme:'carre',
+                            gamme:gamBio3,
+                            plan:[
+                                planCarre0,
+                                planCarre1
                             ]
-                        }
+                        },
+                        {
+                            nom:'Rond - 1',
+                            nb_etage:'2',
+                            forme:'rond',
+                            gamme:gamSyn1,
+                            plan:[
+                                planRond0,
+                                planRond1
+                            ]
+                        },
+                        {
+                            nom:'Rond - 2',
+                            nb_etage:'2',
+                            forme:'rond',
+                            gamme:gamSyn2,
+                            plan:[
+                                planRond0,
+                                planRond1
+                            ]
+                        },
+                        {
+                            nom:'Rond - 3',
+                            nb_etage:'2',
+                            forme:'rond',
+                            gamme:gamSyn3,
+                            plan:[
+                                planRond0,
+                                planRond1
+                            ]
+                        },
                     ], function(err, res){
                         if(err) throw err;
-                        else console.log("Number of 'plan' inserted: " + res.insertedCount);
+                        else console.log("Number of 'modele_gamme' inserted: " + res.insertedCount);
                     });
                 }
             });
@@ -903,6 +929,14 @@ router.get('/commercial/confirmCreation', function (req, res, next) {
 
 router.get('/commercial/visualiserDevis', function (req, res, next) {
 	res.render('commercial/visualiserDevis.ejs');
+});
+
+router.get('/etudes/gestionGammes', function (req, res, next) {
+    res.render('bureau_etude/gestionGammes.ejs');
+});
+
+router.get('/etudes/gestionModules', function (req, res, next) {
+    res.render('bureau_etude/gestionModules.ejs');
 });
 
 module.exports = router;
