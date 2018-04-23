@@ -28,6 +28,12 @@
                                     <th><span class="text">Visualiser devis</span></th>
                                     <th><span class="text">Visualiser dossier technique</span></th>
                                 </tr>
+                                <tr>
+                                    <td>Quentin Hertereau</td>
+                                    <td>72163427</td>
+                                    <td><button class="btn btn-success" onclick="CreatePDF()">Voir</button></td>
+                                    <td><button class="btn btn-success">Voir</button></td>
+                                </tr>
                             </thead>
                             <tbody>
                             </tbody>
@@ -37,6 +43,42 @@
             </article>
         </section>
         <% include ../footer.ejs %>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+            <script>
+                function CreatePDF() {
+                    var pdf = new jsPDF();
+                    pdf.setFontSize(30);
+                    pdf.text(10, 25, "MADERA");
+                    pdf.text(170, 25, "DEVIS");
+
+                    pdf.setFontSize(13);
+                    pdf.text(120, 90, "Mr Quentin Hertereau");
+                    pdf.text(120, 95, "48 route du Mans");
+                    pdf.text(120, 100, "72220, Ecommoy");
+                    pdf.save("devis.pdf");
+
+                    pdf.text(20, 100, "MADERA");
+                    pdf.text(20, 105, "Siège social Lille");
+
+                    pdf.setFontSize(18);
+                    pdf.text(20, 130, "Numero de devis : 72163427");
+                    pdf.text(20, 138, "Date du devis : 24/04/2018");
+
+                    pdf.setFontSize(13);
+                    pdf.text(20, 150, "Description");
+                    pdf.text(80, 150, "Quantité");
+                    pdf.text(130, 150, "Prix Unité");
+                    pdf.text(170, 150, "Montant HT");
+
+                    pdf.text(150, 280, "Montant HT : 245,00€");
+                    pdf.text(150, 285, "Total TVA : 45,00€");
+                    pdf.text(150, 290, "Total TTC : 290,00€");
+                    pdf.text(150, 295, "Net à payer : 290,00€");
+
+                    pdf.save("devis.pdf");
+                }
+
+            </script>
 </body>
 
 </html>
