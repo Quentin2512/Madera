@@ -932,11 +932,11 @@ router.get('/commercial/visualiserDevis', function (req, res, next) {
 });
 
 router.get('/etudes/gestionGammes', function (req, res, next) {
-    res.render('bureau_etude/gestionGammes.ejs');
+    res.render('etudes/gestionGammes.ejs');
 });
 
 router.get('/etudes/gestionModules', function (req, res, next) {
-    res.render('bureau_etude/gestionModules.ejs');
+    res.render('etudes/gestionModules.ejs');
 });
 
 module.exports = router;
