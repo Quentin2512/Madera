@@ -14,16 +14,26 @@
 	<% include ../header.ejs %>
         <section>
             <article>
-                <h2>Bonjour <%= data.nom %> <%= data.prenom %> - <%= data.mail %></h2>
+                <h2>Gestion des Modules</h2>
             </article>
-            <artcile class="row" style="text-align: center;">
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <a href="commercial/createDevis"><h3>Ajout module</h3></a>
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <a href="commercial/visualiserDevis"><h3>Ajout gamme</h3></a>
-                </div>
-            </artcile>
+            <article>
+                <input type="text" placeholder="rechercher" class="form-control"/>
+            </article>
+            <br>
+            <article>
+                <a href="/etudes/creerModule" class="btn btn-success">Ajouter Module</a>
+            </article>
+            <br>
+            <article>
+                <table class="table">
+                    <tr>
+                        <th>Modules</th>
+                        <th>Détails</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </table>
+            </article>
         </section>
     <% include ../footer.ejs %>
 </body>

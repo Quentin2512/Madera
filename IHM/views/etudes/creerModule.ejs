@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<title>Madera</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
+	<% include ../bootstrap_link.ejs %>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/header_footer.css">
+	<link rel="shortcut icon" href="/images/icone.png">
+</head>
+
+<body>
+	<% include ../header.ejs %>
+        <section>
+            <article>
+                <h2>Création Module</h2>
+            </article>
+            <br>
+            <article>
+                <input type="text" class="form-control" placeholder="Nom du module"/><br>
+                <select class="form-control">
+                    <option selected="selected">Famille composant 1</option>
+                </select><br>
+                <select class="form-control">
+                    <option>Composant 1</option>
+                </select><br>
+                <button class="btn btn-success">Ajouter</button>
+                <button class="btn btn-success">Supprimer</button><br>
+                <br>
+                <select class="form-control">
+                    <option>Liste des composants</option>
+                </select><br>
+                <br>
+                <button class="btn btn-success">Valider</button>
+            </article>
+        </section>
+    <% include ../footer.ejs %>
+</body>
+
+</html>
