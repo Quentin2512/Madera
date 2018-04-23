@@ -1029,4 +1029,12 @@ router.get('/etudes/gestionModules', function (req, res, next) {
     res.render('etudes/gestionModules.ejs');
 });
 
+router.get('/etudes/creerModule', function (req, res, next) {
+    res.render('etudes/creerModule.ejs');
+});
+
+router.get('/etudes/creerGamme', function (req, res, next) {
+    res.render('etudes/creerGamme.ejs');
+});
+
 module.exports = router;

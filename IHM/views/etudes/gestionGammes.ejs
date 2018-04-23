@@ -14,16 +14,14 @@
 	<% include ../header.ejs %>
         <section>
             <article>
-                <h2>Bonjour <%= data.nom %> <%= data.prenom %> - <%= data.mail %></h2>
+                <h2>Gestion des gammes</h2>
             </article>
-            <artcile class="row" style="text-align: center;">
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <a href="commercial/createDevis"><h3>Ajout module</h3></a>
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <a href="commercial/visualiserDevis"><h3>Ajout gamme</h3></a>
-                </div>
-            </artcile>
+            <article>
+                <input type="text" placeholder="rechercher" class="form-control"/>
+            </article>
+            <article>
+
+            </article>
         </section>
     <% include ../footer.ejs %>
 </body>
