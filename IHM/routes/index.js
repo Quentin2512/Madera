@@ -976,19 +976,34 @@ router.post('/commercial/createPlan', function (req, res, next) {
 router.post('/commercial/createPlanSearch', function (req, res, next) {
 	var typeSearch = req.body.typeSearch;
 	var data = req.body.data;
-	var types = {};
+	var types = [];
 	switch (typeSearch) {
 		case "gamme":
 			gamme.find().sort('nom').exec(function (error, results) {
 				if (error) return next(error);
 				else {
-					for (var i = 0; i < results.length; i++) {
-						types[i] = {
-							id: results[i]._id,
-							nom: results[i].nom
-						};
-					}
-					res.send(JSON.stringify(types));
+                    for (var i = 0; i < results.length; i++) {
+                        types[i] = {
+                            id: results[i]._id,
+                            nom: results[i].nom,
+                            qualite: ''+results[i].qualite_gamme
+                        };
+                    }
+                    qualite_gamme.find().sort('nom').exec(function (error2, results2){
+                        if(error2) return next(error2);
+                        else{
+                            for(var j=0 ; j<results2.length ; j++){
+                                var idQualite = results2[j]._id;
+                                var nomQualite = results2[j].nom;
+                                for(var i=0 ; i<types.length ; i++){
+                                    if(types[i].qualite == idQualite){
+                                        types[i].qualite = nomQualite;
+                                    }
+                                }
+                            }
+                            res.send(JSON.stringify(types));
+                        }
+                    });
 				}
 			});
 			break;
@@ -1010,10 +1025,52 @@ router.post('/commercial/createPlanSearch', function (req, res, next) {
 				}
 			});
 			break;
+		case "plan":
+            var k=0;
+			modele_gamme.find({_id:data}).sort('nom').exec(function(error, results){
+				if(error) return next(error);
+				else {
+                    var plans = results[0].plan;
+					plan.find().sort().exec(function(error2, results2){
+                        if(error2) return next(error2);
+                        else{
+                            for(var j=0 ; j<results2.length ; j++){
+                                var idPlan = results2[j]._id;
+                                for(var i=0 ; i<plans.length ; i++){
+                                    if(""+plans[i] == ""+idPlan){
+                                        types[k] = {
+                                            id: results2[j]._id,
+                                            nom: results2[j].nom,
+                                            nu_etage: results2[j].nu_etage,
+                                            image: results2[j].image
+                                        };
+                                        k++;
+                                    }
+                                }
+                            }
+                            res.send(JSON.stringify(types));
+                        }
+                    });
+				}
+			});
+			break;
+        case "modules":
+            modulo.find().sort().exec(function(error, results){
+                if(error) return next(error);
+                else{
+                    for(var i = 0; i < results.length; i++){
+						types[i] = {
+							id: results[i]._id,
+							nom: results[i].nom
+						};
+					}
+					res.send(JSON.stringify(types));
+                }
+            });
 	}
 });
 
-router.get('/commercial/confirmCreation', function (req, res, next) {
+router.post('/commercial/confirmCreation', function (req, res, next) {
 
 });
 
