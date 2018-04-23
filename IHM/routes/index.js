@@ -814,6 +814,96 @@ router.get('/commercial/createDevis', function (req, res, next) {
 	});
 });
 
+router.post('/commercial/createDevisClient', function (req, res, next) {
+    var nom = req.body.nomCreate;
+    var prenom = req.body.prenomCreate;
+    var mail = req.body.emailCreate;
+    var telephone = req.body.phoneCreate;
+    var libAdresse = req.body.libAdresseCreate;
+    var numAdresse = req.body.numAdresseCreate;
+    var cpAdresse = req.body.cpAdresseCreate;
+    var villeAdresse = req.body.villeAdresseCreate;
+    var paysAdresse = req.body.paysAdresseCreate;
+
+    var idAdresse = '';
+	adresse.find({
+		libelle: libAdresse,
+		numero: numAdresse,
+		code_postal: cpAdresse,
+		ville: villeAdresse,
+		pays: paysAdresse
+	}).sort('_id').exec(function (error, results) {
+		if (error) return next(error);
+		else {
+			if (results.length > 0) {
+				for (var i = 0; i < results.length; i++) {
+					idAdresse = results[i]._id;
+				}
+                //insertion client
+                db.collection("client").insertMany([
+                    {
+                        nom:nom,
+                        prenom:prenom,
+                        mail:mail,
+                        telephone:telephone,
+                        adresse:idAdresse
+                    }
+                ], function(error2, results2){
+                    if(error2) throw error2;
+                    else{
+                        console.log("Number of 'client' inserted: " + results2.insertedCount);
+                        res.redirect('/commercial/createDevis');
+                    }
+                });
+			} else {
+				adresse.create([
+					{
+						libelle: libAdresse,
+						numero: numAdresse,
+						code_postal: cpAdresse,
+						ville: villeAdresse,
+						pays: paysAdresse
+					}
+				], function (error2, data) {
+					if (error2) return next(error2);
+					else {
+						adresse.find({
+							libelle: libAdresse,
+							numero: numAdresse,
+							code_postal: cpAdresse,
+							ville: villeAdresse,
+							pays: paysAdresse
+						}).sort('_id').exec(function (error3, results3) {
+							if (error3) return next(error3);
+							else {
+								for (var i = 0; i < results3.length; i++) {
+									idAdresse = results3[i]._id;
+								}
+                                //insertion client
+                                db.collection("client").insertMany([
+                                    {
+                                        nom:nom,
+                                        prenom:prenom,
+                                        mail:mail,
+                                        telephone:telephone,
+                                        adresse:idAdresse
+                                    }
+                                ], function(error4, results4){
+                                    if(error4) throw error4;
+                                    else{
+                                        console.log("Number of 'client' inserted: " + results4.insertedCount);
+                                        res.redirect('/commercial/createDevis');
+                                    }
+                                });
+							}
+						});
+					}
+				});
+			}
+		}
+	});
+});
+
 router.post('/commercial/createPlan', function (req, res, next) {
 	var data = {
 		nomProjet: req.body.nomProjet,

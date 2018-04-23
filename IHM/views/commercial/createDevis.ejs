@@ -8,14 +8,14 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/header_footer.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
     <link rel="shortcut icon" href="/images/icone.png">
-    <script src="/libraries/angular.min.js"></script>
+    <% include ../bootstrap_link.ejs %>
 </head>
 
 <body>
     <% include ../header.ejs %>
         <div class="container">
             <h1>Création d'un devis :</h1>
-            <form action="/commercial/createPlan" method="POST" onsubmit="return verifForm()" name="mainForm">
+            <form action="/commercial/createPlan" method="POST">
                 <div class="row">
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <h2>Projet :</h2>
@@ -27,6 +27,7 @@
                                     <option value="<%= clients[i].id %>"><%= clients[i].nom + " " + clients[i].prenom + " - " + clients[i].mail + " - " + clients[i].telephone %></option>
                             <% } %>
                         </select><br/>
+                        <button type="button" class="btn btn-default" onclick="ajoutClient()">Ajouter Client</button>
                         <button type="submit" class="btn btn-primary btnVal">Valider</button>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -45,7 +46,65 @@
                 </div>
             </form>
         </div>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                </div>
+
+            </div>
+        </div>
     <% include ../footer.ejs %>
+    <script>
+        function ajoutClient(){
+            var header = '<button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Ajout d\'un client</h4>';
+            var body = '<div class="container-fluid">'+
+                '<form action="/commercial/createDevisClient" method="POST">'+
+                    '<div class="col-lg-12">'+
+                        '<div class="col-lg-6">'+
+                            '<h3>Client :</h3>'+
+                            '<label>Nom :</label>'+
+                            '<input type="text" name="nomCreate" class="form-control" required/><br/>'+
+                            '<label>Prenom :</label>'+
+                            '<input type="text" name="prenomCreate" class="form-control" required/><br/>'+
+                            '<label>Mail :</label>'+
+                            '<input type="email" name="emailCreate" class="form-control" required/><br/>'+
+                            '<label>Téléphone :</label>'+
+                            '<input type="text" name="phoneCreate" class="form-control" required/><br/>'+
+                        '</div>'+
+                        '<div class="col-lg-6">'+
+                            '<h3>Adresse :</h3>'+
+                            '<label>Numéro :</label>'+
+                            '<input type="number" name="numAdresseCreate" class="form-control" required/><br/>'+
+                            '<label>Libellé :</label>'+
+                            '<input type="text" name="libAdresseCreate" class="form-control" required/><br/>'+
+                            '<label>Code postal :</label>'+
+                            '<input type="number" name="cpAdresseCreate" class="form-control" required/><br/>'+
+                            '<label>Ville :</label>'+
+                            '<input type="text" name="villeAdresseCreate" class="form-control" required/><br/>'+
+                            '<label>Pays :</label>'+
+                            '<input type="text" name="paysAdresseCreate" class="form-control" required/>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="col-lg-12">'+
+                        '<button type="submit" class="form-control btn btn-primary pull-right" style="margin-top:20px;">Valider</button>'+
+                    '</div>'+
+                '</form>'+
+                '</div>';
+            var footer = ''
+            document.getElementsByClassName('modal-header')[0].innerHTML = header;
+            document.getElementsByClassName('modal-body')[0].innerHTML = body;
+            //document.getElementsByClassName('modal-footer')[0].innerHTML = footer;
+            $("#myModal").modal();
+        }
+    </script>
 </body>
 
 </html>
