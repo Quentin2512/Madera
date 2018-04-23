@@ -4,12 +4,12 @@ var schemas = require('./schemas.js');
 var mongoose = require('mongoose');
 var db = mongoose.connection;
 var dbUrl = 'mongodb://Madera:madera@ds161306.mlab.com:61306/madera';
+
 var typeUtilisateur = mongoose.model('type_utilisateur');
 var utilisateur = mongoose.model('utilisateur');
 var client = mongoose.model('client');
 var adresse = mongoose.model('adresse');
 var famille_composant = mongoose.model('famille_composant');
-//var gamme_composant = mongoose.model('gamme_composant');
 var composant = mongoose.model('composant');
 var caracteristique_gamme = mongoose.model('caracteristique_gamme');
 var gamme = mongoose.model('gamme');
@@ -27,8 +27,8 @@ router.get('/', function (req, res, next) {
 router.get('/insertionDonnees', function(req, res, next){
 	/* script insertion données à la base */
 
-	/* insertion type_utilisateur */
-	db.collection("type_utilisateur").insertMany([
+	//insertion type_utilisateur
+	/*db.collection("type_utilisateur").insertMany([
 		{
 			libelle:'fournisseur',
 			societe:'Pro Bois'
@@ -55,17 +55,46 @@ router.get('/insertionDonnees', function(req, res, next){
 		}
 	], function(err, res){
 		if(err) throw err;
-		else console.log("Number of documents inserted: " + res.insertedCount);
-	});
+		else console.log("Number of 'type_utilisateur' inserted: " + res.insertedCount);
+	});*/
 
-	/* récupération adresse */
-	adresse.find().sort('_id').exec(function(error, results){
+    //insertion adresse
+	/*db.collection("adresse").insertMany([
+		{
+			libelle:'rue de Grèce',
+			numero:'2',
+            code_postal:'72100',
+            ville:'Le Mans',
+            pays:'France'
+		},
+		{
+			libelle:'rue de la mariette',
+			numero:'13',
+            code_postal:'72000',
+            ville:'Le Mans',
+            pays:'France'
+		},
+		{
+			libelle:'rue de l\'Avion',
+			numero:'25',
+            code_postal:'49000',
+            ville:'Angers',
+            pays:'France'
+		},
+	], function(err, res){
+		if(err) throw err;
+		else console.log("Number of 'adresse' inserted: " + res.insertedCount);
+	});*/
+
+	//récupération adresse
+	/*adresse.find().sort('_id').exec(function(error, results){
 		if(error) return next(error);
 		else{
 			var idAdresse1=results[0]._id;
 			var idAdresse2=results[1]._id;
+			var idAdresse3=results[1]._id;
 
-			/* récupération type_utilisateur */
+			//récupération type_utilisateur
 			typeUtilisateur.find({libelle:'fournisseur'}).sort('_id').exec(function(error2, results2){
 				if(error2) return next(error2);
 				else{
@@ -86,7 +115,7 @@ router.get('/insertionDonnees', function(req, res, next){
 										else{
 											var idType5=results5[0]._id;
 
-											/* insertion utilisateur */
+											//insertion utilisateur
 											db.collection("utilisateur").insertMany([
 												{
 													nom:'SAINT REQUIER',
@@ -140,15 +169,15 @@ router.get('/insertionDonnees', function(req, res, next){
 												}
 											], function(err, res){
 												if(err) throw err;
-												else console.log("Number of documents inserted: " + res.insertedCount);
+												else console.log("Number of 'utilisateur' inserted: " + res.insertedCount);
 											});
 
-											/* insertion client */
+											//insertion client
 											db.collection("client").insertMany([
 												{
 													nom:'DIGUERRE',
 													prenom:'Robin',
-													mail:'robin.diguerre@viacesi.fr',
+				                                    mail:'robin.diguerre@viacesi.fr',
 													telephone:'0123456789',
 													adresse:idAdresse1
 												},
@@ -161,7 +190,7 @@ router.get('/insertionDonnees', function(req, res, next){
 												}
 											], function(err, res){
 												if(err) throw err;
-												else console.log("Number of documents inserted: " + res.insertedCount);
+												else console.log("Number of 'client' inserted: " + res.insertedCount);
 											});
 										}
 									});
@@ -172,87 +201,10 @@ router.get('/insertionDonnees', function(req, res, next){
 				}
 			});
 		}
-	});
-
-	/* récupération caracteristique_gamme */
-	caracteristique_gamme.find({type:'isolant'}).sort('_id').exec(function(error, results){
-		if(error) return next(error);
-		else{
-			var idIsolant1 = results[0]._id;
-			var idIsolant2 = results[1]._id;
-
-			caracteristique_gamme.find({type:'couverture'}).sort('_id').exec(function(error2, results2){
-				if(error2) return next(error2);
-				else{
-					var idCouverture1 = results2[0]._id;
-					var idCouverture2 = results2[1]._id;
-
-					caracteristique_gamme.find({type:'huisserie'}).sort('_id').exec(function(error3, results3){
-						if(error3) return next(error3);
-						else{
-							var idHuisserie1 = results3[0]._id;
-							var idHuisserie2 = results3[1]._id;
-
-							caracteristique_gamme.find({type:'finition_exterieure'}).sort('_id').exec(function(error4, results4){
-								if(error4) return next(error4);
-								else{
-									var idFinition1 = results4[0]._id;
-									var idFinition2 = results4[1]._id;
-
-									/* insertion gamme */
-									db.collection("gamme").insertMany([
-										{
-											nom:'Classique',
-											caracteristique_gamme:[
-												idIsolant1,
-												idCouverture1,
-												idHuisserie1,
-												idFinition1
-											]
-										},
-										{
-											nom:'Moderne',
-											caracteristique_gamme:[
-												idIsolant2,
-												idCouverture2,
-												idHuisserie2,
-												idFinition2
-											]
-										}
-									], function(err, res){
-										if(err) throw err;
-										else console.log("Number of documents inserted: " + res.insertedCount);
-									});
-								}
-							});
-						}
-					});
-				}
-			});
-		}
-	});
-
-	/* insertion gamme_composant */
-	/*db.collection("gamme_composant").insertMany([
-		{
-			nom:'Lowcost',
-			niveau:'0'
-		},
-		{
-			nom:'Standard',
-			niveau:'1'
-		},
-		{
-			nom:'Premium',
-			niveau:'2'
-		}
-	], function(err, res){
-		if(err) throw err;
-		else console.log("Number of documents inserted: " + res.insertedCount);
 	});*/
 
-	/* insertion famille_composant */
-	db.collection("famille_composant").insertMany([
+	//insertion type_utilisateur
+	/*db.collection("famille_composant").insertMany([
 		{
 			nom:'Montant'
 		},
@@ -270,11 +222,11 @@ router.get('/insertionDonnees', function(req, res, next){
 		}
 	], function(err, res){
 		if(err) throw err;
-		else console.log("Number of documents inserted: " + res.insertedCount);
-	});
+		else console.log("Number of 'famille_composant' inserted: " + res.insertedCount);
+	});*/
 
-	/* récupération famille_composant */
-	famille_composant.find().sort('nom').exec(function(error, results){
+    //récupération famille_composant
+    /*famille_composant.find().sort('nom').exec(function(error, results){
 		if(error) return next(error);
 		else{
 			var famCouverture = results[0]._id;
@@ -283,71 +235,535 @@ router.get('/insertionDonnees', function(req, res, next){
 			var famPanneau = results[3]._id;
 			var famPlancher = results[4]._id;
 
-			/* récupération gamme_composant */
-			gamme_composant.find().sort('niveau').exec(function(error1, results1){
-				if(error1) return next(error1);
-				else{
-					var gamLowcost = results1[0]._id;
-					var gamStandard = results1[1]._id;
-					var gamPremium = results1[2]._id;
+			//récupération utilisateur
+            utilisateur.find({nom:'URUNUELA'}).sort().exec(function(error2, results2){
+                if(error2) return next(error2);
+                else{
+                    var idCommercial = results2[0]._id;
 
-					/* récupération utilisateur */
-					utilisateur.find({prenom:'François'}).sort().exec(function(error2, results2){
-						if(error2) return next(error2);
-						else{
-							var idCommercial = results2[0]._id;
-
-							/* insertion composant */
-							db.collection("composant").insertMany([
-								{
-									libelle:"Montant 2600x120x45",
-									caracteristique:[
-										"2600 mm",
-										"120 mm",
-										"45 mm"
-									],
-									prix:"10",
-									utilisateur:idCommercial,
-									famille_composant:famMontant
-								}
-							], function(err, res){
-								if(err) throw err;
-								else console.log("Number of documents inserted: " + res.insertedCount);
-							});
-						}
-					});
-				}
-			});
+                    //insertion composant
+                    db.collection("composant").insertMany([
+                        {
+                            libelle:"Montant 2600x120x45",
+                            caracteristique:[
+                                "2600 mm",
+                                "120 mm",
+                                "45 mm"
+                            ],
+                            prix:"15",
+                            utilisateur:idCommercial,
+                            famille_composant:famMontant
+                        },
+                        {
+                            libelle:"Couverture 3800x3800x1000",
+                            caracteristique:[
+                                '3800 mm',
+                                '3800 mm',
+                                '1000 mm'
+                            ],
+                            prix:"20",
+                            utilisateur:idCommercial,
+                            famille_composant:famCouverture
+                        },
+                        {
+                            libelle:"Panneau 2600x3800x30",
+                            caracteristique:[
+                                "2600 mm",
+                                "3800 mm",
+                                "30 mm"
+                            ],
+                            prix:"15",
+                            utilisateur:idCommercial,
+                            famille_composant:famPanneau
+                        },
+                        {
+                            libelle:"Plancher 3800x3800x50",
+                            caracteristique:[
+                                "3800 mm",
+                                "3800 mm",
+                                "50 mm"
+                            ],
+                            prix:"30",
+                            utilisateur:idCommercial,
+                            famille_composant:famMontant
+                        }
+                    ], function(err, res){
+                        if(err) throw err;
+                        else console.log("Number of 'composant' inserted: " + res.insertedCount);
+                    });
+                }
+            });
 		}
-	});
+	});*/
+
+    //récupération composant
+	/*composant.find().sort('_id').exec(function(error, results){
+		if(error) return next(error);
+		else{
+			var comMontant = results[0]._id;
+			var comCouverture = results[1]._id;
+			var comPanneau = results[2]._id;
+			var comPlancher = results[3]._id;
+
+			//insertion module
+            db.collection("module").insertMany([
+                {
+                    nom:'Mur - 1',
+                    composant:[
+                        {
+                            id_composant:comMontant,
+                            nb:'2'
+                        },
+                        {
+                            id_composant:comPanneau,
+                            nb:'1'
+                        }
+                    ]
+                },
+                {
+                    nom:'Couverture - 1',
+                    composant:[
+                        {
+                            id_composant:comCouverture,
+                            nb:'1'
+                        }
+                    ]
+                },
+                {
+                    nom:'Plancher - 1',
+                    composant:[
+                        {
+                            id_composant:comPlancher,
+                            nb:'1'
+                        }
+                    ]
+                }
+            ], function(err, res){
+                if(err) throw err;
+                else console.log("Number of 'module' inserted: " + res.insertedCount);
+            });
+		}
+	});*/
+
+    //insertion caracteristique_gamme
+	/*db.collection("caracteristique_gamme").insertMany([
+		{
+			nom:'Finition extérieure',
+            type:'bois'
+		},
+		{
+			nom:'Finition extérieure',
+            type:'crépis'
+		},
+		{
+			nom:'Isolant',
+            type:'synthétique'
+		},
+		{
+			nom:'Isolant',
+            type:'naturel'
+		},
+		{
+			nom:'Isolant',
+            type:'biologique'
+		},
+		{
+			nom:'Couverture',
+            type:'tuiles'
+		},
+		{
+			nom:'Couverture',
+            type:'ardoise'
+		}
+	], function(err, res){
+		if(err) throw err;
+		else console.log("Number of 'caracteristique_gamme' inserted: " + res.insertedCount);
+	});*/
+
+    //insertion qualite_gamme
+	/*db.collection("qualite_gamme").insertMany([
+		{
+			nom:'lowcost',
+            type:'0.5'
+		},
+		{
+			nom:'normal',
+            type:'1'
+		},
+		{
+			nom:'premium',
+            type:'1.5'
+		}
+	], function(err, res){
+		if(err) throw err;
+		else console.log("Number of 'qualite_gamme' inserted: " + res.insertedCount);
+	});*/
+
+    //récupération module
+    /*modulo.find().sort('nom').exec(function(error, results){
+		if(error) return next(error);
+		else{
+			var modMur = results[0]._id;
+			var modCouverture = results[1]._id;
+			var modPlancher = results[2]._id;
+
+			//récupération caracteristique_gamme
+            caracteristique_gamme.find().sort('nom').exec(function(error2, results2){
+                if(error2) return next(error2);
+                else{
+                    var carFinBois = results2[0]._id;
+                    var carFinCrepis = results2[1]._id;
+                    var carIsoSynthetique = results2[2]._id;
+                    var carIsoNaturel = results2[3]._id;
+                    var carIsoBiologique = results2[4]._id;
+                    var carCouvTuiles = results2[5]._id;
+                    var carCouvArdoise = results2[6]._id;
+
+                    //récupération qualite_gamme
+                    qualite_gamme.find().sort('nom').exec(function(error3, results3){
+                        if(error3) return next(error3);
+                        else{
+                            var quaLowcost = results3[0]._id;
+                            var quaNormal = results3[1]._id;
+                            var quaPremium = results3[2]._id;
+
+                            //insertion gamme
+                            db.collection("gamme").insertMany([
+                                {
+                                    nom:'Bois / Biologique / Ardoise - 1',
+                                    caracteristique_gamme: [
+                                        carFinBois,
+                                        carIsoBiologique,
+                                        carCouvArdoise
+                                    ],
+                                    qualite_gamme: quaLowcost,
+                                    module:[
+                                        {
+                                            id_module: modMur,
+                                            nb: '10'
+                                        },
+                                        {
+                                            id_module: modCouverture,
+                                            nb: '3'
+                                        },
+                                        {
+                                            id_module: modPlancher,
+                                            nb: '3'
+                                        }
+                                    ]
+                                },
+                                {
+                                    nom:'Bois / Biologique / Ardoise - 2',
+                                    caracteristique_gamme: [
+                                        carFinBois,
+                                        carIsoBiologique,
+                                        carCouvArdoise
+                                    ],
+                                    qualite_gamme: quaNormal,
+                                    module:[
+                                        {
+                                            id_module: modMur,
+                                            nb: '10'
+                                        },
+                                        {
+                                            id_module: modCouverture,
+                                            nb: '3'
+                                        },
+                                        {
+                                            id_module: modPlancher,
+                                            nb: '3'
+                                        }
+                                    ]
+                                },
+                                {
+                                    nom:'Bois / Biologique / Ardoise - 3',
+                                    caracteristique_gamme: [
+                                        carFinBois,
+                                        carIsoBiologique,
+                                        carCouvArdoise
+                                    ],
+                                    qualite_gamme: quaPremium,
+                                    module:[
+                                        {
+                                            id_module: modMur,
+                                            nb: '10'
+                                        },
+                                        {
+                                            id_module: modCouverture,
+                                            nb: '3'
+                                        },
+                                        {
+                                            id_module: modPlancher,
+                                            nb: '3'
+                                        }
+                                    ]
+                                },
+                                {
+                                    nom:'Crepis / Synthétique / Tuiles - 1',
+                                    caracteristique_gamme: [
+                                        carFinCrepis,
+                                        carIsoSynthetique,
+                                        carCouvTuiles
+                                    ],
+                                    qualite_gamme: quaLowcost,
+                                    module:[
+                                        {
+                                            id_module: modMur,
+                                            nb: '10'
+                                        },
+                                        {
+                                            id_module: modCouverture,
+                                            nb: '3'
+                                        },
+                                        {
+                                            id_module: modPlancher,
+                                            nb: '3'
+                                        }
+                                    ]
+                                },
+                                {
+                                    nom:'Crepis / Synthétique / Tuiles - 2',
+                                    caracteristique_gamme: [
+                                        carFinCrepis,
+                                        carIsoSynthetique,
+                                        carCouvTuiles
+                                    ],
+                                    qualite_gamme: quaNormal,
+                                    module:[
+                                        {
+                                            id_module: modMur,
+                                            nb: '10'
+                                        },
+                                        {
+                                            id_module: modCouverture,
+                                            nb: '3'
+                                        },
+                                        {
+                                            id_module: modPlancher,
+                                            nb: '3'
+                                        }
+                                    ]
+                                },
+                                {
+                                    nom:'Crepis / Synthétique / Tuiles - 3',
+                                    caracteristique_gamme: [
+                                        carFinCrepis,
+                                        carIsoSynthetique,
+                                        carCouvTuiles
+                                    ],
+                                    qualite_gamme: quaPremium,
+                                    module:[
+                                        {
+                                            id_module: modMur,
+                                            nb: '10'
+                                        },
+                                        {
+                                            id_module: modCouverture,
+                                            nb: '3'
+                                        },
+                                        {
+                                            id_module: modPlancher,
+                                            nb: '3'
+                                        }
+                                    ]
+                                }
+                            ], function(err, res){
+                                if(err) throw err;
+                                else console.log("Number of 'gamme' inserted: " + res.insertedCount);
+                            });
+                        }
+                    });
+                }
+            });
+		}
+	});*/
+
+    //récupération module
+    /*modulo.find().sort('nom').exec(function(error, results){
+		if(error) return next(error);
+		else{
+			var modMur = results[0]._id;
+			var modCouverture = results[1]._id;
+			var modPlancher = results[2]._id;
+
+            //insertion plan
+            db.collection("plan").insertMany([
+                {
+                    nom:'Carre - 3p - 0',
+                    nu_etage:'0',
+                    image:'carre_3p',
+                    module:[]
+                },
+                {
+                    nom:'Carre - 3p - 1',
+                    nu_etage:'1',
+                    image:'carre_3p',
+                    module:[
+                        {
+                            id_module: modPlancher,
+                            nb: '3'
+                        }
+                    ]
+                },
+                {
+                    nom:'Rond - 4p - 0',
+                    nu_etage:'0',
+                    image:'rond_4p',
+                    module:[]
+                },
+                {
+                    nom:'Rond - 4p - 1',
+                    nu_etage:'1',
+                    image:'rond_4p',
+                    module:[
+                        {
+                            id_module: modPlancher,
+                            nb: '4'
+                        }
+                    ]
+                }
+            ], function(err, res){
+                if(err) throw err;
+                else console.log("Number of 'plan' inserted: " + res.insertedCount);
+            });
+        }
+    });*/
+
+    //récupération gamme
+    /*gamme.find().sort('nom').exec(function(error, results){
+		if(error) return next(error);
+		else{
+			var gamBio1 = results[0]._id;
+			var gamBio2 = results[1]._id;
+			var gamBio3 = results[2]._id;
+			var gamSyn1 = results[3]._id;
+			var gamSyn2 = results[4]._id;
+			var gamSyn3 = results[5]._id;
+
+            //récupération gamme
+            plan.find().sort('nom').exec(function(error, results){
+                if(error) return next(error);
+                else{
+                    var planCarre0 = results[0]._id;
+                    var planCarre1 = results[1]._id;
+                    var planRond0 = results[2]._id;
+                    var planRond1 = results[3]._id;
+
+                    //insertion devis
+                    db.collection("devis").insertMany([
+                        {
+                            nom:'Carre - 3p - 0',
+                            nu_etage:'0',
+                            image:'carre_3p',
+                            module:[]
+                        },
+                        {
+                            nom:'Carre - 3p - 1',
+                            nu_etage:'1',
+                            image:'carre_3p',
+                            module:[
+                                {
+                                    id_module: modPlancher,
+                                    nb: '3'
+                                }
+                            ]
+                        },
+                        {
+                            nom:'Rond - 4p - 0',
+                            nu_etage:'0',
+                            image:'rond_4p',
+                            module:[]
+                        },
+                        {
+                            nom:'Rond - 4p - 1',
+                            nu_etage:'1',
+                            image:'rond_4p',
+                            module:[
+                                {
+                                    id_module: modPlancher,
+                                    nb: '4'
+                                }
+                            ]
+                        }
+                    ], function(err, res){
+                        if(err) throw err;
+                        else console.log("Number of 'plan' inserted: " + res.insertedCount);
+                    });
+                }
+            });
+        }
+    });*/
 });
 
 router.post('/home', function (req, res, next) {
-	/*var data = {
-		login:req.body.login,
-		password:req.body.password,
-		type:req.body.type
-	};
-
-	var page = 'home.ejs';
-
-	switch(data.type){
-		case "commercial":
-
-			page = 'commercial/home.ejs';
-			break;
-	}
-
-	res.render(page);*/
-
 	var data = {
 		login: req.body.login,
-		password: req.body.password
+		password: req.body.password,
+        nom: '',
+        prenom: '',
+        mail: '',
+        telephone: '',
+        adresse: '',
+        type: ''
 	};
 
-	res.render('home.ejs', {
-		data: data
-	});
+    utilisateur.find({
+        login: data.login,
+        mdp: data.password
+    }).sort('_id').exec(function (error, results) {
+        if (error) return next(error);
+		else {
+            if (results.length > 0) {
+                var idAdresse = 0;
+                var idType = 0;
+				for (var i = 0; i < results.length; i++) {
+					data.nom = results[i].nom;
+					data.prenom = results[i].prenom;
+					data.mail = results[i].mail;
+					data.telephone = results[i].telephone;
+                    idAdresse = results[i].adresse;
+                    idType = results[i].type;
+				}
+                adresse.find({
+                    _id: idAdresse
+                }).sort('_id').exec(function (error2, results2) {
+                    if (error2) return next(error2);
+                    else {
+                        for (var i = 0; i < results2.length; i++) {
+                            data.adresse = {
+                                libelle: results2[i].libelle,
+                                numero: results2[i].numero,
+                                code_postal: results2[i].code_postal,
+                                ville: results2[i].ville,
+                                pays: results2[i].pays
+                            }
+                        }
+                        typeUtilisateur.find({
+                            _id: idType
+                        }).sort('_id').exec(function (error2, results2) {
+                            if (error2) return next(error2);
+                            else {
+                                for (var i = 0; i < results2.length; i++) {
+                                    data.type = {
+                                        libelle: results2[i].libelle,
+                                        societe: results2[i].societe
+                                    }
+                                }
+                                console.log(data);
+                                res.render(data.type.libelle+'/home.ejs', {
+                                    data: data
+                                });
+                            }
+                        });
+                    }
+                });
+			} else {
+                res.render('error.ejs', {
+                    error: 'Identifiant et/ou mot de passe incorrects.'
+                });
+            }
+        }
+    });
 });
 
 router.get('/commercial/createDevis', function (req, res, next) {
@@ -382,9 +798,6 @@ router.post('/commercial/createPlan', function (req, res, next) {
 		vilAdresse: req.body.villeClient,
 		payAdresse: req.body.paysClient
 	};
-	console.log(data.nomProjet + " - " + data.idClient);
-	console.log(data.numAdresse + ", " + data.libAdresse);
-	console.log(data.posAdresse + " " + data.vilAdresse + ", " + data.payAdresse);
 
 	var idAdresse = '';
 	adresse.find({
@@ -442,13 +855,6 @@ router.post('/commercial/createPlan', function (req, res, next) {
 			});
 		}
 	});
-
-
-	/*res.render('commercial/createPlan.ejs', {
-		data: newData
-	});
-
-	res.render('commercial/createPlan.ejs');*/
 });
 
 router.post('/commercial/createPlanSearch', function (req, res, next) {

@@ -120,21 +120,6 @@ var famille_composantSchema = new Schema({
 
 var famille_composant = mongoose.model('famille_composant',famille_composantSchema);
 
-/** ---------------------------------------------------- gamme_composant ----------------------------------------------**/
-
-/*var gamme_composantSchema = new Schema({
-     nom:{
-        type:String,
-        required:true
-    },
-    niveau:{
-        type:String,
-        required:true
-    }
-});
-
-var gamme_composant = mongoose.model('gamme_composant',gamme_composantSchema);*/
-
 /** ---------------------------------------------------- composant ---------------------------------------------------**/
 
 var composantSchema = new Schema({
@@ -151,10 +136,6 @@ var composantSchema = new Schema({
         required:true
     },
 	utilisateur : {
-        type:Schema.Types.ObjectId,
-        required:true
-    },
-	gamme_composant : {
         type:Schema.Types.ObjectId,
         required:true
     },
@@ -191,7 +172,21 @@ var gammeSchema = new Schema({
 	caracteristique_gamme :{
         type:[Schema.Types.ObjectId],
         required:true
-    }
+    },
+	qualite_gamme :{
+        type:Schema.Types.ObjectId,
+        required:true
+    },
+	module : [new Schema({
+        id_module:{
+            type:Schema.Types.ObjectId,
+            required:true
+        },
+        nb:{
+            type:String,
+            required:true
+        }
+    })]
 });
 
 var gamme = mongoose.model('gamme',gammeSchema);
@@ -216,10 +211,6 @@ var qualite_gamme = mongoose.model('qualite_gamme',qualite_gammeSchema);
 var moduleSchema = new Schema({
     nom : {
         type:String,
-        required:true
-    },
-	gamme : {
-        type:Schema.Types.ObjectId,
         required:true
     },
 	composant : [new Schema({
@@ -248,14 +239,6 @@ var planSchema = new Schema({
         required:true
     },
 	image : {
-        type:String,
-        required:true
-    },
-	nb_module : {
-        type:String,
-        required:true
-    },
-    type:{
         type:String,
         required:true
     },
