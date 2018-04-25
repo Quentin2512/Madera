@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Madera</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
+    <% include ../bootstrap_link.ejs %>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/header_footer.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/fournisseur.css">
+        <link rel="shortcut icon" href="/images/icone.png">
+</head>
+
+<body>
+    <% include ../header.ejs %>
+        <section>
+            <article>
+                <h2>Bonjour
+                    <%= data.nom %>
+                        <%= data.prenom %> -
+                            <%= data.mail %>
+                </h2>
+            </article>
+
+            <article>
+                <input type="text" class="form-control" placeholder="Rechercher..." /><br>
+                <button class="btn btn-success">Ajouter</button>
+            </article>
+            <article class="objet">
+                <div>
+                    <h3>Montant</h3>
+                    <br>
+                    <div>
+                        <span>Montant 2600x120x45</span>
+                        <button class="btn btn-success">Modifier</button>
+                        <button class="btn btn-success">Supprimer</button>
+                    </div>
+                    <br>
+                    <div>
+                        <span>Montant 1500x100x30</span>
+                        <button class="btn btn-success">Modifier</button>
+                        <button class="btn btn-success">Supprimer</button>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <h3>Courverture</h3>
+                    <br>
+                    <div>
+                        <span>Couverture 3800x3800x1000</span>
+                        <button class="btn btn-success">Modifier</button>
+                        <button class="btn btn-success">Supprimer</button>
+                    </div>
+                </div>
+                <div>
+                    <h3>Panneau</h3>
+                    <br>
+                    <div>
+                        <span>Panneau 2600x3800x30</span>
+                        <button class="btn btn-success">Modifier</button>
+                        <button class="btn btn-success">Supprimer</button>
+                    </div>
+                </div>
+            </article>
+        </section>
+        <% include ../footer.ejs %>
+</body>
+
+</html>

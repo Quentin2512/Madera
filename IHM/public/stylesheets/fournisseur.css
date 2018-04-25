@@ -1,0 +1,14 @@
+h3
+{
+    color: rgb(110, 99, 86);
+}
+
+h3 > .objet
+{
+    text-align: center;
+}
+
+.objet
+{
+    text-align: center;
+}
